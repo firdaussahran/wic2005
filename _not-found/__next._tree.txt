@@ -1,0 +1,3 @@
+:HL["/wic2005/_next/static/chunks/3wf2yj31s-k5d.css","style"]
+:HL["/wic2005/_next/static/chunks/0gebek1h9jgcb.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4112,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4160,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"Fe0A9PtNETvZzzQhXJfRA"}
