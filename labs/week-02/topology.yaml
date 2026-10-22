@@ -1,0 +1,30 @@
+# topology.yaml — a small network described as data.
+# build_topo.py reads this file and creates exactly this network in Mininet.
+#
+# Make it yours first (see "Your addresses" in the lab):
+#   NNNN = the last 4 digits of your student ID, e.g. 4207
+#   NN   = the last 2 digits, without a leading zero, e.g. 7
+# Replace every NNNN and NN below. Don't put your full student ID here: this file
+# goes in your repository, which may be public.
+
+student_id_last4: "NNNN"
+
+switches:
+  - s1
+
+hosts:
+  - name: h1
+    ip: 10.NN.0.1/24
+    ipv6: fd00:NNNN::1/64
+  - name: h2
+    ip: 10.NN.0.2/24
+    ipv6: fd00:NNNN::2/64
+  - name: h3
+    ip: 10.NN.0.3/24
+    ipv6: fd00:NNNN::3/64
+
+# Each link joins two nodes.
+links:
+  - [h1, s1]
+  - [h2, s1]
+  - [h3, s1]
