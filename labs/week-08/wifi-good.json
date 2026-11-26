@@ -1,0 +1,24 @@
+{
+  "example-vlans:vlans": {
+    "vlan": [
+      {"id": 10, "name": "users"},
+      {"id": 30, "name": "guests"}
+    ]
+  },
+  "example-wifi:wifi": {
+    "network": [
+      {
+        "ssid": "Cafe-Guest",
+        "vlan": 30,
+        "security": "open",
+        "bands": ["2.4", "5"]
+      },
+      {
+        "ssid": "Staff",
+        "vlan": 10,
+        "passphrase": "correct-horse-battery",
+        "bands": ["5", "6"]
+      }
+    ]
+  }
+}

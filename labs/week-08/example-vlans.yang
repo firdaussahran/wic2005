@@ -1,0 +1,87 @@
+module example-vlans {
+  yang-version 1.1;
+  namespace "urn:example:vlans";
+  prefix vl;
+
+  description
+    "VLANs, and the switch ports that carry them.";
+
+  revision 2026-11-27 {
+    description
+      "Initial revision.";
+  }
+
+  typedef vlan-id {
+    type uint16 {
+      range "1..4094";
+    }
+    description
+      "An IEEE 802.1Q VLAN ID.";
+  }
+
+  container vlans {
+    list vlan {
+      key "id";
+      must "not(purpose = 'voice') or qos-priority" {
+        error-message "A voice VLAN needs a qos-priority.";
+      }
+      leaf id {
+        type vlan-id;
+      }
+      leaf name {
+        type string {
+          length "1..32";
+          pattern '[a-z][a-z0-9-]*';
+        }
+        mandatory true;
+      }
+      leaf purpose {
+        type enumeration {
+          enum data;
+          enum voice;
+          enum management;
+        }
+        default "data";
+      }
+      leaf qos-priority {
+        type uint8 {
+          range "0..7";
+        }
+      }
+      leaf member-count {
+        config false;
+        type uint32;
+        description
+          "How many ports currently carry this VLAN.";
+      }
+    }
+  }
+
+  container ports {
+    list port {
+      key "name";
+      leaf name {
+        type string;
+      }
+      leaf enabled {
+        type boolean;
+        default "true";
+      }
+      leaf access-vlan {
+        type leafref {
+          path "/vl:vlans/vl:vlan/vl:id";
+        }
+      }
+      leaf-list trunk-vlans {
+        type vlan-id;
+      }
+      leaf oper-status {
+        config false;
+        type enumeration {
+          enum up;
+          enum down;
+        }
+      }
+    }
+  }
+}

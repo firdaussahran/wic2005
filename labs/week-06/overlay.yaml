@@ -1,0 +1,45 @@
+# overlay.yaml: your data centre, as data. build_overlay.py builds it; make_page6.py publishes it.
+#
+# Replace 4207 with the last 4 digits of your student ID, and every 10.7. with 10.NN.,
+# where NN is the last 2 digits (as a number: 07 → 7). Then make the design your own.
+#
+# How addresses are given out:
+#   - hypervisors get .1, .2, .3 … of the underlay network, in the order listed;
+#   - a tenant's VMs get .10, .11, .12 … of the tenant's network, in the order listed;
+#   - each VM's MAC address is 02:VV:VV:VV:00:XX: the tenant's VNI in the middle, and the last
+#     byte of the VM's address at the end. Two VMs can share an address, never a MAC.
+#
+# Requirements (build_overlay.py checks them):
+#   - at least 3 hypervisors; at least 2 tenants, each with its own VNI;
+#   - two tenants using the SAME network: overlapping addresses, kept apart by VNI;
+#   - every tenant's VMs on at least 2 hypervisors, and one tenant spanning 3;
+#   - at least one hypervisor hosting VMs of two tenants;
+#   - names: a-z and 0-9, starting with a letter, at most 8 characters.
+#
+# This starting design meets the requirements, but it isn't yours yet: change the tenants,
+# VNIs, networks, VMs and placement, and design the MTUs (that's check_mtu()'s job to check).
+
+student_id_last4: "4207"
+
+underlay:
+  network: 10.7.0.0/24
+  mtu: 1500                    # the largest IP packet the underlay carries
+
+hypervisors: [hv1, hv2, hv3]
+
+tenants:
+  - name: red
+    vni: 100
+    network: 10.7.50.0/24
+    mtu: 1500                  # the largest IP packet this tenant's VMs send
+    vms:                       # [VM name, the hypervisor it runs on]
+      - [red1, hv1]
+      - [red2, hv2]
+      - [red3, hv3]
+  - name: blue
+    vni: 200
+    network: 10.7.50.0/24      # the same addresses as red, on purpose
+    mtu: 1500
+    vms:
+      - [blue1, hv1]
+      - [blue2, hv3]
